@@ -16,8 +16,8 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 });
 
 let baseMaps = {
-  Streets: streets,
-  Satellite: satelliteStreets
+  "Streets": streets,
+  "Satellite": satelliteStreets
 };
 
 // Create the map object with center, zoom level and default layer.
@@ -30,20 +30,13 @@ let map = L.map('mapid', {
 // Pass our map layers into our layers control and add the layers control to the map.
 L.control.layers(baseMaps).addTo(map);
 
-//Retrieve the earthquake GeoJSON data.
+// Retrieve the earthquake GeoJSON data.
 let earthquakesPast7Days = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 // Grabbing our GeoJSON data.
 d3.json(earthquakesPast7Days).then(function(data) {
-  console.log(data);
   // Creating a GeoJSON layer with the retrieved data.
-  L.geoJson(data, {
-    onEachFeature: function(feature, layer) {
-    console.log(layer);
-    //layer.bindPopup("<h3>Neighborhood: "+ layer.feature.properties.AREA_NAME + "</h3>");
-    }
-  }).addTo(map);
+  L.geoJson(data).addTo(map);
 });
-
 
 
